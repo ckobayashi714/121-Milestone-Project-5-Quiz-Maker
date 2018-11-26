@@ -37,7 +37,7 @@ question quiz::get_question(int index) {
 }
 void quiz::display() {
   cout << "Question and Answer list\n";
-  for (int i = 0; i < size; i++) {
+  for (int i = 0; i < capacity; i++) {
     cout << (i + 1) << ". " << (_questions + i)->text() << "\n"
          << "Answer: " << (_questions + i)->answer() << "\n";
   }
@@ -47,7 +47,7 @@ void quiz::save(string filename) {
   ofstream outfile;
   outfile.open(filename);
   outfile << size << "\n";
-  for (int i = 0; i < size; i++) {
+  for (int i = 0; i < capacity; i++) {
     outfile << "[SQ]\n";
     outfile << (*(_questions + i))->text() << "\n"
     outfile << (*(_questions + i))->answer() << "\n";

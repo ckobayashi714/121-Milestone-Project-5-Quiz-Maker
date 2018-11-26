@@ -7,6 +7,7 @@ using namespace std;
 int main() {
   /* This will create an array of 100 question objects*/
   quiz q;
+  question q;
   question question;
   /* This program will reapteadly ask the user to input a question or exit. If
   the user inputs something other than a or b (capital letters too), they will
