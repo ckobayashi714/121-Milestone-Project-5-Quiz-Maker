@@ -19,26 +19,27 @@ question create_question() {
 }
 bool question::check(string answer) {
   if (answer == 1) {
-    return 1;
+    return true;
   }
+  return false;
 }
 string question::as_save_text() {
-  string question q;
+  return "[SQ]".append(q.text).append(q.answer);
 }
 
+question quiz::add_question(question q) {
 
-quiz::add_question(questin q) {
-
-
+cout << "Sorry, can't create any more questions.\n"
 }
-quiz::get_question(int index) {
+question quiz::get_question(int index) {
+  return question;
 
 }
 void quiz::display() {
   cout << "Question and Answer list\n";
   for (int i = 0; i < size; i++) {
-    cout << (i + 1) << ". " << (qArray + i)->text() << "\n"
-         << "Answer: " << (qArray + i)->answer() << "\n";
+    cout << (i + 1) << ". " << (_questions + i)->text() << "\n"
+         << "Answer: " << (_questions + i)->answer() << "\n";
   }
   cout << "\n";
 }
@@ -48,8 +49,8 @@ void quiz::save(string filename) {
   outfile << size << "\n";
   for (int i = 0; i < size; i++) {
     outfile << "[SQ]\n";
-    outfile << (*(qArray + i))->text() << "\n"
-    outfile << (*(qArray + i))->answer() << "\n";
+    outfile << (*(_questions + i))->text() << "\n"
+    outfile << (*(_questions + i))->answer() << "\n";
   }
   outfile.close();
   cout << "File saved successfully!\n\n";
@@ -66,8 +67,8 @@ void quiz::load(string filename) {
       getline(infile, trash);
       getline(infile, q);
       getline(infile, a);
-      (*(qArray + i)).set_text(q);
-      (*(qArray + i)).set_answer(a);
+      (*(_questions + i)).set_text(q);
+      (*(_questions + i)).set_answer(a);
     }
   }
   infile.close();

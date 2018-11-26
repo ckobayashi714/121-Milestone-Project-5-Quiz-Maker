@@ -6,8 +6,8 @@ using namespace std;
 
 int main() {
   /* This will create an array of 100 question objects*/
-  question q;
-  question qArray[100];
+  quiz q;
+  question question;
   /* This program will reapteadly ask the user to input a question or exit. If
   the user inputs something other than a or b (capital letters too), they will
   be notified with an invalid message, but will then be asked again what option
@@ -31,26 +31,24 @@ int main() {
     switch (choice) {
     case 'a':
     case 'A':
-      qArray[size] = create_question();
-      // cout << qArray[size].text();
-      // cout << qArray[size].answer();
+      question = create_question();
       size++;
       break;
     case 'b':
     case 'B':
-      display_questions(qArray, size);
+      quiz::display();
       break;
     case 'c':
     case 'C':
       cout << "What filename would you like to use? ";
       getline(cin, filename);
-      save_questions(qArray, size, filename);
+      quiz::save(string filename);
       break;
     case 'd':
     case 'D':
       cout << "What file would you like to load? ";
       getline(cin, filename);
-      load_questions(qArray, &size, filename);
+      quiz::load(string filename);
       break;
     case 'e':
     case 'E':
