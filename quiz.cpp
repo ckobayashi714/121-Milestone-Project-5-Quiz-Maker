@@ -1,8 +1,12 @@
+// Author: Paul Salvador Inventado
+// Date: November 4, 2018
+//
+// Contains classes and functions used to define a quiz that contains questions
+// with corresponding answers
 // Filename quiz.cpp
 #include "quiz.hpp"
 #include <fstream>
 #include <iostream>
-#include <string>
 using namespace std;
 
 question create_question() {
@@ -17,27 +21,17 @@ question create_question() {
   cout << "Question added!\n\n";
   return q;
 }
-bool question::check(string answer) {
-  if (answer == 1) {
-    return true;
+void quiz::add_question(question q) {
+  if (_size == _capacity) {
+    cout << "Sorry, can't create any more questions.\n";
+  } else {
+    _questions[_size++] = q;
   }
-  return false;
-}
-string question::as_save_text() {
-  return "[SQ]".append(q.text).append(q.answer);
 }
 
-question quiz::add_question(question q) {
-
-cout << "Sorry, can't create any more questions.\n"
-}
-question quiz::get_question(int index) {
-  return question;
-
-}
 void quiz::display() {
   cout << "Question and Answer list\n";
-  for (int i = 0; i < capacity; i++) {
+  for (int i = 0; i < _size; i++) {
     cout << (i + 1) << ". " << (_questions + i)->text() << "\n"
          << "Answer: " << (_questions + i)->answer() << "\n";
   }
@@ -46,31 +40,37 @@ void quiz::display() {
 void quiz::save(string filename) {
   ofstream outfile;
   outfile.open(filename);
-  outfile << size << "\n";
-  for (int i = 0; i < capacity; i++) {
-    outfile << "[SQ]\n";
-    outfile << (*(_questions + i))->text() << "\n"
-    outfile << (*(_questions + i))->answer() << "\n";
+  outfile << _size << "\n";
+  for (int i = 0; i < _size; i++) {
+    outfile << _questions[i].as_save_text();
   }
   outfile.close();
   cout << "File saved successfully!\n\n";
 }
+
 void quiz::load(string filename) {
-  ifstream infile;
-  infile.open(filename);
-  if (infile.is_open()) {
-    string trash;
-    string a, q;
-    infile >> *size;
-    infile.ignore();
-    for (int i = 0; i < *size; i++) {
-      getline(infile, trash);
-      getline(infile, q);
-      getline(infile, a);
-      (*(_questions + i)).set_text(q);
-      (*(_questions + i)).set_answer(a);
-    }
+  ifstream load_file;
+  load_file.open(filename);
+  // Retrieves the number of questions from the file
+  load_file >> _size;
+  // Remove \n after the integer value
+  load_file.ignore();
+
+  // Deletes old question array then create a new array whose capacity is
+  // 30 elements more than the number of questions in the loaded file
+  delete[] _questions;
+  _capacity = _size + 30;
+  _questions = new question[_capacity];
+
+  // Read all questions and assign question values to the array
+  string temp;
+  for (int i = 0; i < _size; i++) {
+    getline(load_file, temp);
+    getline(load_file, temp);
+    _questions[i].set_text(temp);
+    getline(load_file, temp);
+    _questions[i].set_answer(temp);
   }
-  infile.close();
+  load_file.close();
   cout << "File loaded successfully!\n\n";
 }

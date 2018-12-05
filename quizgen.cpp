@@ -1,21 +1,26 @@
+// Author: Paul Salvador Inventado
+// Date: November 4, 2018
+//
+// Contains classes and functions used to define a quiz that contains questions
+// with corresponding answers
 #include "quiz.hpp"
-#include <fstream>
 #include <iostream>
 #include <string>
 using namespace std;
 
 int main() {
   /* This will create an array of 100 question objects*/
-  quiz q;
-  question q;
-  question question;
+  // quiz q;
+  // question q;
+  // question question;
+  quiz quizmaker(50);
   /* This program will reapteadly ask the user to input a question or exit. If
   the user inputs something other than a or b (capital letters too), they will
   be notified with an invalid message, but will then be asked again what option
   they would like to choose.*/
-  string filename;
   char choice;
-  int size = 0;
+  string filename;
+
   cout << "Welcome to QuizMaker\n\n";
 
   do {
@@ -32,24 +37,23 @@ int main() {
     switch (choice) {
     case 'a':
     case 'A':
-      question = create_question();
-      size++;
+      quizmaker.add_question(create_question());
       break;
     case 'b':
     case 'B':
-      quiz::display();
+      quizmaker.display();
       break;
     case 'c':
     case 'C':
       cout << "What filename would you like to use? ";
       getline(cin, filename);
-      quiz::save(string filename);
+      quizmaker.save(filename);
       break;
     case 'd':
     case 'D':
       cout << "What file would you like to load? ";
       getline(cin, filename);
-      quiz::load(string filename);
+      quizmaker.load(filename);
       break;
     case 'e':
     case 'E':
